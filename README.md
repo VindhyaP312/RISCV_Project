@@ -1,1 +1,2 @@
-# Comp_Arch_Project
+# RISCV_Project
+## Computer Architechture Sem 3 project
