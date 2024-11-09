@@ -158,10 +158,15 @@ int I_execute(vector<string> part){
         reg_value[rd] = reg_value[rs1] << imm_value;
     }   
     else if(ins == "srli"){   
-        unsigned long int srli_result = reg_value[rs1] >> imm_value; 
-        unsigned long int shift_deci = (1ULL << (64 - imm_value)) - 1;
-        srli_result = srli_result & shift_deci;
-        reg_value[rd] = srli_result;
+        if(imm_value == 0){
+            reg_value[rd] = reg_value[rs1];
+        }
+        else{
+            unsigned long int srli_result = reg_value[rs1] >> imm_value; 
+            unsigned long int shift_deci = (1ULL << (64 - imm_value)) - 1;
+            srli_result = srli_result & shift_deci;
+            reg_value[rd] = srli_result;
+        }
     }
     else if(ins == "srai") {
         reg_value[rd] = reg_value[rs1] >> imm_value;

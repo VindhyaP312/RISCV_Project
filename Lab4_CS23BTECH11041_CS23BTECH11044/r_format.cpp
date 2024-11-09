@@ -5,6 +5,7 @@
 #include <cmath>      // for 'pow' function
 using namespace std;
 #include "riscv_header.h"
+#include <bitset>
 
 /*
 * takes the whole insruction string as argument and returns 8 bit hexcode or any error message
@@ -94,12 +95,17 @@ int R_execute(vector<string> part){
     }
     else if(ins == "srl"){  
         unsigned long int rs2_val = reg_value[rs2];
-        rs2_val = long(rs2_val%64);
-        rs2_val = (rs2_val + 64)%64;
-        unsigned long int srl_result = reg_value[rs1] >> rs2_val;
-        unsigned long int shift_deci = (1ULL << (64 - rs2_val)) - 1;
-        srl_result = srl_result & shift_deci;
-        reg_value[rd] = srl_result;
+        if(rs2_val == 0){
+            reg_value[rd] = reg_value[rs1];
+        }
+        else{
+            rs2_val = long(rs2_val%64);
+            rs2_val = (rs2_val + 64)%64;
+            unsigned long int srl_result = reg_value[rs1] >> rs2_val;
+            unsigned long int shift_deci = (1ULL << (64 - rs2_val)) - 1;
+            srl_result = srl_result & shift_deci;
+            reg_value[rd] = srl_result;
+        }
     }
     else if(ins == "sra"){
         unsigned long int rs2_val = reg_value[rs2];

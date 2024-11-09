@@ -107,19 +107,19 @@ int B_execute(vector<string> part){
             return 1;
     } 
     else if(ins == "bltu"){
-        string temp1 = deci_to_bin(to_string(reg_value[rs1]),64);
-        string temp2 = deci_to_bin(to_string(reg_value[rs2]),64);
         // converting to unsigned long ints and comparing them
-        if(stoul(temp1,nullptr,2)<stoul(temp2,nullptr,2))
+        unsigned long temp1 = reg_value[rs1];
+        unsigned long temp2 = reg_value[rs2];
+        if(temp1 < temp2)
             return imm/4;
         else
             return 1;
     } 
     else if(ins == "bgeu"){
-        string temp1 = deci_to_bin(to_string(reg_value[rs1]),64);
-        string temp2 = deci_to_bin(to_string(reg_value[rs2]),64);
-        // converting to unsigned long ints and comparing them
-        if(stoul(temp1,nullptr,2)>=stoul(temp2,nullptr,2))
+        // // converting to unsigned long ints and comparing them
+        unsigned long temp1 = reg_value[rs1];
+        unsigned long temp2 = reg_value[rs2];
+        if(temp1 >= temp2)
             return imm/4;
         else
             return 1;

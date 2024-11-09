@@ -186,7 +186,7 @@ void run()
         auto it = break_points.find(lineNo);
         if( it != break_points.end() && it -> second == 0){    // if already that run flow has stopped there once
             cout << "Execution stopped at breakpoint" << endl;
-            it -> second = 1;
+            it -> second = 0;
             break;
         }
         if(it != break_points.end() && it -> second == 1){
