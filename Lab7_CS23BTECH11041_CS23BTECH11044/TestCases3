@@ -1,0 +1,257 @@
+# program1
+.data
+.dword 8, 8
+.text
+lui x3, 0x10
+ld x4, 0(x3)
+ld x5, 8(x3)
+addi x3, x3, 16
+addi x10, x0, 0
+add x12, x3, x0
+If1: beq x4, x10, end1
+addi x11, x0, 0
+If2: beq x5, x11, end2
+ld x20, 0(x12)
+addi x12, x12, 8
+addi x11, x11, 1
+beq x0, x0, If2
+end2: addi x10, x10, 1
+beq x0, x0, If1
+end1: add x0, x0, x0
+
+# program2
+.data
+.dword 8, 8
+.text
+lui x3, 0x10
+ld x4, 0(x3)
+ld x5, 8(x3)
+addi x3, x3, 16
+addi x10, x0, 0
+add x12, x3, x0
+If1: beq x4, x10, end1
+addi x11, x0, 0
+slli x15, x10, 3
+add x12, x3, x15
+If2: beq x5, x11, end2
+ld x20, 0(x12)
+slli x15, x5, 3
+add x12, x12, x15
+addi x11, x11, 1
+beq x0, x0, If2
+end2: addi x10, x10, 1
+beq x0, x0, If1
+end1: add x0, x0, x0
+
+# program3
+.data
+.dword 8, 8
+.text
+lui x3, 0x10
+ld x4, 0(x3)
+ld x5, 8(x3)
+addi x3, x3, 16
+addi x10, x0, 0
+add x12, x3, x0
+If1: beq x4, x10, end1
+addi x11, x0, 0
+If2: beq x5, x11, end2
+ld x20, 0(x12)
+ld x20, 1024(x12)           
+addi x12, x12, 8
+addi x11, x11, 1
+beq x0, x0, If2
+end2: addi x10, x10, 1
+beq x0, x0, If1
+end1: add x0, x0, x0
+
+.data
+.dword 16, 16
+.text
+lui x3, 0x10
+ld x4, 0(x3)
+ld x5, 8(x3)
+addi x3, x3, 16
+addi x10, x0, 0
+add x12, x3, x0
+If1: beq x4, x10, end1
+addi x11, x0, 0
+If2: beq x5, x11, end2
+ld x20, 0(x12)
+sd x20, 1024(x12)
+addi x12, x12, 8
+addi x11, x11, 1
+beq x0, x0, If2
+end2: addi x10, x10, 1
+beq x0, x0, If1
+end1: add x0, x0, x0
+
+.data
+.dword 10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+.text
+lui x3, 0x10
+ld x4, 0(x3)
+ld x5, 8(x3)
+ld x6, 16(x3)
+ld x7, 24(x3)
+ld x8, 32(x3)
+ld x9, 40(x3)
+ld x10, 48(x3)
+ld x11, 56(x3)
+ld x12, 64(x3)
+ld x13, 72(x3)
+
+.data
+.dword 16, 16
+.text
+lui x3, 0x10
+ld x4, 0(x3)
+ld x5, 8(x3)
+addi x3, x3, 16
+addi x10, x0, 0
+add x12, x3, x0
+If1: beq x4, x10, end1
+addi x11, x0, 0
+If2: beq x5, x11, end2
+ld x20, 0(x12)
+sd x20, 512(x12)
+addi x12, x12, 8
+addi x11, x11, 1
+beq x0, x0, If2
+end2: addi x10, x10, 1
+beq x0, x0, If1
+end1: add x0, x0, x0
+
+
+##for FIFO, LRU, RANDOM
+.data
+.dword 10, 20, 30, 40, 50
+.text
+lui x3, 0x10
+ld x4, 0(x3)
+ld x5, 8(x3)
+ld x6, 16(x3)
+ld x7, 24(x3)
+ld x4, 0(x3)
+ld x8, 32(x3)
+
+
+.data
+.dword 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 523, 524, 525, 533, 512
+.text
+lui x3, 0x10
+lui x10, 0x10
+addi x10, x10, 0x200
+ld x4, 0(x3)
+addi x3, x3, 8
+Loop: beq x4, x0, Exit2
+ld x5, 0(x3)
+ld x6, 8(x3)
+addi x3, x3, 16
+gcd: beq x5, x0, Exit1
+beq x6, x0, Exit1
+beq x6, x5, Exit
+bge x5, x6, Else
+sub x6, x6, x5
+beq x0, x0, Skip_Else
+Else: sub x5, x5, x6
+Skip_Else: beq x0, x0, gcd
+Exit1: sd x0, 0(x10)
+beq x0, x0, Loop_cont
+Exit: sd x6, 0(x10)
+Loop_cont: addi x10, x10, 8
+addi x4, x4, -1
+beq x0, x0, Loop
+Exit2: add x0, x0, x0
+
+.data
+.dword 0x0123456789abcdef, 0xfff
+.text
+lui x1, 0x10
+sb x2, 1(x1)
+sh x4, 3(x1)
+sw x6, 4(x1)
+
+.data
+.dword 0x0123456789abcdef, 0xfff
+.text
+lui x1, 0x10
+sb x2, 1(x1)
+sh x4, 3(x1)
+sw x6, 4(x1)
+sd x8, 7(x1)
+
+.data
+.dword 0x0123456789abcdef, 0xfff
+.text
+lui x1, 0x10
+lb x2, 1(x1)
+lbu x3, 1(x1)
+lh x4, 3(x1)
+lhu x5, 3(x1)
+lw x6, 4(x1)
+lwu x7, 4(x1)
+ld x8, 7(x1)
+
+.data
+.dword 0x0123456789abcdef, 0xfff
+.text
+lui x1, 0x10
+lb x2, 0(x1)
+lbu x3, 0(x1)
+lh x4, 0(x1)
+lhu x5, 0(x1)
+lw x6, 0(x1)
+lwu x7, 0(x1)
+ld x8, 0(x1)
+
+#checked with sb, sh, sw, sd
+.data
+.dword 0x0123456789abcdef, 0xfff
+.text
+lui x3, 0x10
+addi x1, x1, 0x00
+sw x1, 3(x3)
+
+#checked with sb, sh, sw, sd
+.data
+.dword 0x0123456789abcdef, 0xfff
+.text
+lui x3, 0x10
+addi x1, x1, 0x00
+sw x1, 0(x3)
+
+#32
+8
+0
+FIFO
+WB
+changed replacement and write policies
+
+
+.data
+.dword 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff
+.text
+lui x3, 0x10
+sb x4, 0(x3)
+sb x5, 8(x3)
+sb x6, 16(x3)
+sb x7, 24(x3)
+sb x4, 0(x3)
+sb x8, 32(x3)
+sb x9, 40(x3)
+
+.data
+.dword 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff
+.text
+lui x3, 0x10
+sb x4, 0(x3)
+sb x5, 8(x3)
+sb x6, 16(x3)
+sb x7, 24(x3)
+sb x4, 0(x3)
+sb x8, 32(x3)
+sb x9, 40(x3)
+sb x10, 48(x3)
+sb x11, 56(x3)
+sb x12, 64(x3)
